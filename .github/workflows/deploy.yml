@@ -29,6 +29,13 @@ jobs:
         with:
           path: dist
 
+      # 放在最后且允许失败：Netlify 出问题不能连带挡住 GitHub Pages 的发布
+      - name: 同步到 Netlify
+        continue-on-error: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: node scripts/deploy-netlify.mjs
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

@@ -1,128 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>余的个人主页</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
-      background: linear-gradient(135deg, #dbeafe, #ede9fe, #fce7f3);
-      color: #0f172a;
-      padding: 24px;
-    }
-    .card {
-      width: min(760px, 100%);
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 28px;
-      padding: 40px;
-      box-shadow: 0 24px 70px rgba(15, 23, 42, 0.14);
-      backdrop-filter: blur(10px);
-    }
-    .badge {
-      display: inline-block;
-      margin: 0 0 16px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: #dbeafe;
-      color: #1d4ed8;
-      font-size: 14px;
-      font-weight: 700;
-    }
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(30px, 5vw, 44px);
-      line-height: 1.15;
-    }
-    .tag {
-      margin: 0 0 26px;
-      color: #2563eb;
-      font-size: 18px;
-      font-weight: 700;
-    }
-    .intro {
-      margin: 0 0 24px;
-      line-height: 1.8;
-      font-size: 17px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin: 24px 0;
-    }
-    .box {
-      padding: 20px;
-      border-radius: 20px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-    }
-    .box h2 {
-      margin: 0 0 8px;
-      font-size: 18px;
-    }
-    .box p {
-      margin: 0;
-      color: #475569;
-      line-height: 1.7;
-    }
-    .links {
-      margin: 26px 0 0;
-    }
-    a {
-      display: inline-block;
-      padding: 12px 18px;
-      border-radius: 14px;
-      background: #2563eb;
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      transition: 0.2s;
-    }
-    a:hover {
-      background: #1d4ed8;
-      transform: translateY(-2px);
-    }
-    .note {
-      margin: 22px 0 0;
-      color: #64748b;
-      font-size: 14px;
-    }
-  </style>
-</head>
-<body>
-  <main class="card">
-    <p class="badge">Vibe AI Lab 新生</p>
-    <h1>你好，我是余</h1>
-    <p class="tag">自动化专业 | 对 AI 方向感兴趣</p>
-
-    <p class="intro">
-      我正在了解大模型、Agent、MCP、RAG 等 AI 方向的新技术，
-      也在学习如何把想法真正做出来。
-    </p>
-
-    <div class="grid">
-      <section class="box">
-        <h2>当前目标</h2>
-        <p>完成个人网页 demo，熟悉 GitHub，持续学习 AI 工具和基础知识。</p>
-      </section>
-
-      <section class="box">
-        <h2>兴趣方向</h2>
-        <p>AI 应用、自动化 + AI、Agent、持续动手实践。</p>
-      </section>
-    </div>
-
-    <p class="links">
-      <a href="https://github.com/Yu3334kk" target="_blank">我的 GitHub</a>
-    </p>
-
-    <p class="note">这个页面会持续更新。</p>
-  </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="余卓谚 · 杭州电子科技大学 自动化 · 正在学 vibe coding" />
+    <meta name="theme-color" content="#0b0e14" />
+    <title>余卓谚 · whoami</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

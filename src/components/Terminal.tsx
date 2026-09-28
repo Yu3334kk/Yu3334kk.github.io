@@ -16,7 +16,7 @@ const intro: Line[] = [
   ...out(content.name, content.school, `定位 · ${content.tagline}`),
   { kind: "cmd", text: "ls ./now" },
   ...out(...content.focus.map((f) => `${f.title} · ${f.status}`)),
-  ...note("想知道更多 · 敲 about / skills / contact"),
+  ...note("想知道更多 · 敲 about / log / contact"),
 ];
 
 type Command = { desc: string; run?: () => Line[] };
@@ -51,6 +51,11 @@ const commands: Record<string, Command> = {
         `微信 · ${content.contact.wechat}`,
         ...(content.contact.github ? [`GitHub · ${content.contact.github}`] : []),
       ),
+  },
+  log: {
+    desc: "这个页面是怎么做出来的",
+    run: () =>
+      content.process.flatMap((p, i) => out(`${i + 1}. ${p.title}`, p.note)),
   },
   clear: { desc: "清空屏幕" },
 };
@@ -223,12 +228,13 @@ export function Terminal() {
           <button
             key={name}
             type="button"
+            disabled={!ready}
             onClick={(e) => {
               e.stopPropagation();
               skipRef.current = true;
               submit(name);
             }}
-            className="rounded border border-line px-2 py-1 text-[11px] text-dim transition-colors hover:border-accent/40 hover:text-accent"
+            className="rounded border border-line px-2 py-1 text-[11px] text-dim transition-colors hover:border-accent/40 hover:text-accent disabled:opacity-40 disabled:hover:border-line disabled:hover:text-dim"
           >
             {name}
           </button>

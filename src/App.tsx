@@ -80,6 +80,33 @@ export function App() {
           </ul>
         </Section>
 
+        <Section title="这个页面是怎么做出来的">
+          <ol className="space-y-4 border-l border-line pl-5">
+            {content.process.map((p, i) => (
+              <li key={p.title} className="relative">
+                <span className="absolute -left-[24px] top-1.5 size-2 rounded-full bg-accent/70" />
+                <p className="text-sm text-fg">
+                  <span className="mr-2 text-accent">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {p.title}
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-dim">{p.note}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-5 text-xs">
+            <a
+              href={`https://github.com/${content.repo}/commits/main`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-accent2 hover:underline"
+            >
+              完整过程在 commit 记录里 →
+            </a>
+          </p>
+        </Section>
+
         <Section title="找到我">
           <div className="space-y-2 rounded-lg border border-line bg-panel px-4 py-4 text-sm">
             <p className="text-dim">

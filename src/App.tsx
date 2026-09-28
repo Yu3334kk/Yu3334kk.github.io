@@ -5,7 +5,7 @@ import { content } from "./content";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="mt-14">
+    <section className="mt-10 sm:mt-14">
       <h2 className="mb-5 flex items-center gap-3 text-sm text-dim">
         <span className="text-accent">#</span>
         {title}
@@ -42,9 +42,13 @@ export function App() {
         </Section>
 
         <Section title="我现在在做什么">
-          <ul className="grid gap-3 sm:grid-cols-3">
+          {/* 手机上三张卡竖排要吃掉 367px，改成横滑，下一张露一截做提示 */}
+          <ul className="-mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0">
             {content.focus.map((f) => (
-              <li key={f.title} className="rounded-lg border border-line bg-panel p-4">
+              <li
+                key={f.title}
+                className="w-[78vw] max-w-[280px] shrink-0 snap-start rounded-lg border border-line bg-panel p-4 sm:w-auto sm:max-w-none"
+              >
                 <p className="text-sm text-fg">{f.title}</p>
                 <p className="mt-1 text-xs text-accent">{f.status}</p>
                 <p className="mt-2 text-xs leading-relaxed text-dim">{f.note}</p>

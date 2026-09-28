@@ -73,6 +73,7 @@ export function Terminal() {
   const [value, setValue] = useState("");
   const skipRef = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
   const historyRef = useRef<string[]>([]);
   // 等于 historyRef.current.length 时表示"还没翻到历史"，即当前空输入行
   const histPos = useRef(0);
@@ -103,6 +104,12 @@ export function Terminal() {
       cancelled = true;
     };
   }, []);
+
+  // 新输出出现时滚到底，像真终端那样；不这么做的话手机端连点几条命令就看不到自己的结果了
+  useEffect(() => {
+    const box = boxRef.current;
+    if (box) box.scrollTop = box.scrollHeight;
+  }, [shown]);
 
   function submit(raw: string) {
     const cmd = raw.trim().toLowerCase();
@@ -174,7 +181,10 @@ export function Terminal() {
         <span className="ml-2 truncate text-xs text-dim">yu@hzd — 自我介绍</span>
       </div>
 
-      <div className="min-h-[300px] px-4 py-4 text-[13px] leading-relaxed sm:min-h-[330px] sm:px-6 sm:text-sm">
+      <div
+        ref={boxRef}
+        className="max-h-[70vh] min-h-[300px] overflow-y-auto px-4 py-4 text-[13px] leading-relaxed sm:min-h-[330px] sm:px-6 sm:text-sm"
+      >
         {shown.map((line, i) =>
           line.kind === "cmd" ? (
             <p key={i} className="mt-3 first:mt-0">

@@ -26,34 +26,45 @@ export function Particles() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (!window.matchMedia("(pointer: fine)").matches) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let width = 0;
-    let height = 0;
+    let boxW = 0;
+    let boxH = 0;
+    let originX = 0;
+    let originY = 0;
     let raf = 0;
+    let prev: { x: number; y: number } | null = null;
     const parts: Particle[] = [];
 
+    // canvas 是替换元素，`fixed inset-0` 只会把它摆成固有尺寸而不会拉伸，
+    // 所以必须显式写 CSS 宽高。用 clientWidth 而不是 innerWidth：后者含滚动条，
+    // 而 fixed 元素的可视区不含，混用会让画面被横向压缩、粒子跟鼠标对不上。
     const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      boxW = document.documentElement.clientWidth;
+      boxH = document.documentElement.clientHeight;
+      canvas.style.width = `${boxW}px`;
+      canvas.style.height = `${boxH}px`;
+      canvas.width = Math.round(boxW * dpr);
+      canvas.height = Math.round(boxH * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const rect = canvas.getBoundingClientRect();
+      originX = rect.left;
+      originY = rect.top;
     };
 
     const draw = () => {
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, boxW, boxH);
       for (let i = parts.length - 1; i >= 0; i--) {
         const p = parts[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.vx *= 0.94;
-        p.vy *= 0.94;
-        p.life -= 0.022;
+        p.vx *= 0.9;
+        p.vy *= 0.9;
+        p.life -= 0.035;
         if (p.life <= 0) {
           parts.splice(i, 1);
           continue;
         }
-        ctx.globalAlpha = p.life * 0.45;
+        ctx.globalAlpha = p.life * 0.5;
         ctx.fillStyle = p.color;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
@@ -68,17 +79,32 @@ export function Particles() {
       raf = requestAnimationFrame(draw);
     };
 
-    const onMove = (e: PointerEvent) => {
+    const spawn = (x: number, y: number) => {
       if (parts.length >= MAX) parts.shift();
       parts.push({
-        x: e.clientX,
-        y: e.clientY,
-        vx: (Math.random() - 0.5) * 1.6,
-        vy: (Math.random() - 0.5) * 1.6 - 0.2,
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
         life: 1,
-        size: 1.6 + Math.random() * 2.6,
+        size: 1.4 + Math.random() * 2.2,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
       });
+    };
+
+    const onMove = (e: PointerEvent) => {
+      const x = e.clientX - originX;
+      const y = e.clientY - originY;
+      if (prev) {
+        // 沿两帧之间的路径补点，否则快速移动时拖尾会断成一节一节的
+        const dx = x - prev.x;
+        const dy = y - prev.y;
+        const steps = Math.min(5, Math.max(1, Math.round(Math.hypot(dx, dy) / 10)));
+        for (let i = 1; i <= steps; i++) spawn(prev.x + (dx * i) / steps, prev.y + (dy * i) / steps);
+      } else {
+        spawn(x, y);
+      }
+      prev = { x, y };
       if (!raf) raf = requestAnimationFrame(draw);
     };
 

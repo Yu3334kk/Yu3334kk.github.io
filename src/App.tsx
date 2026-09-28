@@ -84,21 +84,27 @@ export function App() {
           </ul>
         </Section>
 
-        <Section title="这个页面是怎么做出来的">
-          <ol className="space-y-4 border-l border-line pl-5">
-            {content.process.map((p, i) => (
-              <li key={p.title} className="relative">
-                <span className="absolute -left-[24px] top-1.5 size-2 rounded-full bg-accent/70" />
-                <p className="text-sm text-fg">
-                  <span className="mr-2 text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {p.title}
-                </p>
-                <p className="mt-1 text-xs leading-relaxed text-dim">{p.note}</p>
+        <Section title="我和 AI 怎么分工">
+          <p className="mb-4 text-sm text-dim">
+            一句话：<span className="text-fg">我负责判断要不要、对不对；怎么写交给它。</span>
+          </p>
+          <ul className="-mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0">
+            {content.division.map((g) => (
+              <li
+                key={g.who}
+                className="w-[80vw] max-w-[300px] shrink-0 snap-start rounded-lg border border-line bg-panel p-4 sm:w-auto sm:max-w-none"
+              >
+                <p className="text-sm text-accent">{g.who}</p>
+                <ul className="mt-2 space-y-2">
+                  {g.items.map((t) => (
+                    <li key={t} className="text-xs leading-relaxed text-dim">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
-          </ol>
+          </ul>
           <p className="mt-5 text-xs">
             <a
               href={`https://github.com/${content.repo}/commits/main`}
@@ -106,7 +112,7 @@ export function App() {
               rel="noreferrer"
               className="text-accent2 hover:underline"
             >
-              完整过程在 commit 记录里 →
+              完整过程在 commit 记录里，也可以在终端敲 log →
             </a>
           </p>
         </Section>

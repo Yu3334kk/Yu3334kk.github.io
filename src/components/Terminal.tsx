@@ -53,9 +53,12 @@ const commands: Record<string, Command> = {
       ),
   },
   log: {
-    desc: "这个页面是怎么做出来的",
-    run: () =>
-      content.process.flatMap((p, i) => out(`${i + 1}. ${p.title}`, p.note)),
+    desc: "这个页面的提交记录",
+    // 哈希是 ASCII，这里 padEnd 能对齐
+    run: () => [
+      ...out(...content.commits.map((c) => `${c.hash.padEnd(8)} ${c.text}`)),
+      ...note(`完整记录 → github.com/${content.repo}/commits/main`),
+    ],
   },
   clear: { desc: "清空屏幕" },
 };

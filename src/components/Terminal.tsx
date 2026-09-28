@@ -173,33 +173,28 @@ export function Terminal() {
   }
 
   return (
-    <div
-      className="overflow-hidden rounded-lg border border-line bg-panel shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_24px_60px_-24px_rgba(0,0,0,0.9)]"
-      onClick={wake}
-    >
-      <div className="flex items-center gap-2 border-b border-line bg-ink/60 px-4 py-3">
-        <span className="size-2.5 rounded-full bg-[#ff5f57]" />
-        <span className="size-2.5 rounded-full bg-[#febc2e]" />
-        <span className="size-2.5 rounded-full bg-[#28c840]" />
-        <span className="ml-2 truncate text-xs text-dim">yu@hzd — 自我介绍</span>
+    <div className="mt-8 border border-rule bg-raised" onClick={wake}>
+      <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-rule px-4 py-2 sm:px-5">
+        <span className="text-[10px] tracking-[0.18em] text-muted">终端</span>
+        <span className="text-[10px] text-muted">输入命令 · Tab 补全 · ↑↓ 历史</span>
       </div>
 
       <div
         ref={boxRef}
-        className="max-h-[70vh] min-h-[300px] overflow-y-auto px-4 py-4 text-[13px] leading-relaxed sm:min-h-[330px] sm:px-6 sm:text-sm"
+        className="max-h-[70vh] min-h-[240px] overflow-y-auto px-4 py-4 font-mono text-[13px] leading-relaxed sm:min-h-[280px] sm:px-5"
       >
         {shown.map((line, i) =>
           line.kind === "cmd" ? (
             <p key={i} className="mt-3 first:mt-0">
               <span className="text-accent">$ </span>
-              <span className="text-fg">{line.text}</span>
+              <span className="text-ink">{line.text}</span>
             </p>
           ) : line.kind === "note" ? (
-            <p key={i} className="whitespace-pre-wrap pl-5 text-accent2">
+            <p key={i} className="whitespace-pre-wrap pl-5 text-accent">
               {line.text}
             </p>
           ) : (
-            <p key={i} className="whitespace-pre-wrap pl-5 text-dim">
+            <p key={i} className="whitespace-pre-wrap pl-5 text-muted">
               {line.text}
             </p>
           ),
@@ -225,18 +220,18 @@ export function Terminal() {
               autoComplete="off"
               spellCheck={false}
               placeholder="输入命令"
-              className="min-w-0 flex-1 border-none bg-transparent text-fg caret-accent outline-none placeholder:text-dim/45"
+              className="min-w-0 flex-1 border-none bg-transparent text-ink caret-accent outline-none placeholder:text-muted/50"
             />
           </form>
         ) : (
           <p className="mt-3 caret">
             <span className="text-accent">$ </span>
-            <span className="text-fg">{typed}</span>
+            <span className="text-ink">{typed}</span>
           </p>
         )}
       </div>
 
-      <div className="flex flex-wrap gap-1.5 border-t border-line bg-ink/40 px-4 py-3 sm:px-6">
+      <div className="flex flex-wrap gap-1.5 border-t border-rule px-4 py-3 sm:px-5">
         {Object.keys(commands).map((name) => (
           <button
             key={name}
@@ -247,7 +242,7 @@ export function Terminal() {
               skipRef.current = true;
               submit(name);
             }}
-            className="rounded border border-line px-2 py-1 text-[11px] text-dim transition-colors hover:border-accent/40 hover:text-accent disabled:opacity-40 disabled:hover:border-line disabled:hover:text-dim"
+            className="border border-rule px-2 py-1 font-mono text-[11px] text-muted transition-colors hover:border-accent hover:text-accent disabled:opacity-40 disabled:hover:border-rule disabled:hover:text-muted"
           >
             {name}
           </button>

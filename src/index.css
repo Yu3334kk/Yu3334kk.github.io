@@ -1,17 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #0b0e14;
-  --color-panel: #10141d;
-  --color-line: #242d3d;
-  --color-fg: #dfe4ee;
-  --color-dim: #94a0b4;
-  --color-accent: #7ee787;
-  --color-accent2: #7aa2f7;
+  /* 印刷风色板：纸、墨、一条砖红 */
+  --color-paper: #f4f1ea;
+  --color-raised: #fbf9f4;
+  --color-rule: #d9d2c4;
+  --color-ink: #1a1815;
+  --color-muted: #6b6357;
+  --color-accent: #b5462f;
 
-  --font-mono:
-    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Cascadia Mono",
-    "PingFang SC", "Microsoft YaHei", monospace;
+  --font-serif: Georgia, "Times New Roman", "Songti SC", "Source Han Serif SC",
+    "Noto Serif CJK SC", SimSun, serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
+    "Cascadia Mono", "PingFang SC", "Microsoft YaHei", monospace;
 }
 
 html {
@@ -19,34 +22,17 @@ html {
 }
 
 body {
-  background: var(--color-ink);
-  color: var(--color-fg);
-  font-family: var(--font-mono);
-  /* 不加载外部字体：Google Fonts 在国内不稳，系统栈足够 */
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
-/* 氛围层：两团很淡的光，避免整页死黑显得"没做完" */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(620px 420px at 12% -8%, rgba(126, 231, 135, 0.09), transparent 65%),
-    radial-gradient(760px 520px at 92% 6%, rgba(122, 162, 247, 0.08), transparent 65%);
-}
-
-#root {
-  position: relative;
-  z-index: 1;
-}
-
 ::selection {
-  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 22%, transparent);
 }
 
+/* 终端里的方块光标 */
 .caret::after {
   content: "";
   display: inline-block;
@@ -58,22 +44,22 @@ body::before {
   animation: blink 1.05s steps(1) infinite;
 }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-/* 标题用细条光标：方块光标在大字号下看起来像选错了文本 */
+/* 标题用细条光标：方块在大字号下像选错了文本 */
 .caret-bar::after {
   content: "";
   display: inline-block;
   width: 2px;
-  height: 0.9em;
-  margin-left: 5px;
-  vertical-align: -0.08em;
+  height: 0.85em;
+  margin-left: 6px;
+  vertical-align: -0.05em;
   background: var(--color-accent);
   animation: blink 1.05s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

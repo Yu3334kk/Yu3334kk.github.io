@@ -206,8 +206,8 @@ export function Terminal() {
               onKeyDown={onKeyDown}
               autoComplete="off"
               spellCheck={false}
-              placeholder="输入命令 · Tab 补全 · ↑↓ 翻历史"
-              className="w-full flex-1 border-none bg-transparent text-fg caret-accent outline-none placeholder:text-dim/45"
+              placeholder="输入命令"
+              className="min-w-0 flex-1 border-none bg-transparent text-fg caret-accent outline-none placeholder:text-dim/45"
             />
           </form>
         ) : (

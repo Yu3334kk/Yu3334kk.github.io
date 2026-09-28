@@ -56,37 +56,37 @@ export function App() {
         <Section title="我会什么">
           <ul className="divide-y divide-line overflow-hidden rounded-lg border border-line bg-panel">
             {content.skills.map((s) => (
-              <li key={s.name} className="flex flex-wrap items-baseline gap-x-3 px-4 py-3">
-                <span className="text-sm text-fg">{s.name}</span>
-                <span className="rounded-full border border-line px-2 py-0.5 text-[11px] text-accent2">
-                  {s.level}
-                </span>
-                <span className="w-full text-xs text-dim sm:ml-auto sm:w-56 sm:text-right">
-                  {s.note}
-                </span>
+              <li key={s.name} className="px-4 py-3">
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-sm text-fg">{s.name}</span>
+                  <span className="rounded-full border border-line px-2 py-0.5 text-[11px] text-accent2">
+                    {s.level}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-dim">{s.note}</p>
               </li>
             ))}
           </ul>
         </Section>
 
         <Section title="不写代码的时候">
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-3 text-sm">
             {content.interests.map((i) => (
-              <li key={i.name} className="flex flex-wrap gap-x-3">
-                <span className="text-fg">{i.name}</span>
-                <span className="text-dim">{i.note}</span>
+              <li key={i.name}>
+                <p className="text-fg">{i.name}</p>
+                <p className="mt-0.5 text-xs text-dim">{i.note}</p>
               </li>
             ))}
           </ul>
         </Section>
 
         <Section title="找到我">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-lg border border-line bg-panel px-4 py-4 text-sm">
-            <span className="text-dim">
+          <div className="space-y-2 rounded-lg border border-line bg-panel px-4 py-4 text-sm">
+            <p className="text-dim">
               微信 <span className="text-fg">{content.contact.wechat}</span>
-            </span>
+            </p>
             {content.contact.github && (
-              <span className="text-dim">
+              <p className="text-dim">
                 GitHub{" "}
                 <a
                   href={`https://github.com/${content.contact.github}`}
@@ -96,7 +96,7 @@ export function App() {
                 >
                   @{content.contact.github}
                 </a>
-              </span>
+              </p>
             )}
           </div>
         </Section>
